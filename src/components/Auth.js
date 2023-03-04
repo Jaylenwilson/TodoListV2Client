@@ -68,11 +68,11 @@ export default function Auth(props) {
 
   return (
     <>
-      <div className=" w-full bg-cover bg-center relative bg-gradient-to-tr from-blue-700 h-96">
+      <div className=" w-full bg-cover bg-center relative bg-gradient-to-tr from-blue-700 h-80">
         <img className="blur-sm w-full h-full object-cover absolute mix-blend-overlay" src="https://media.istockphoto.com/id/496207390/photo/writing-to-do-list-of-a-day-is-a-good-habit.jpg?b=1&s=170667a&w=0&k=20&c=Mk3WZTtiYvBP6GedoL1OI1C6uTppgOS7chYbhWBEB1w=" alt="" />
         <div className="p-24">
-          <h1 className="text-white text-5xl font-bold"> Take Control of Your Schedule </h1>
-          <h2 className="text-white text-3xl font-light">Simplify Your Day with Our To-Do List App</h2>
+          <h1 className="text-white text-2xl xl:text-5xl lg:text-4xl md:text-4xl sm:text-3xl xs:text-3xl tiny:text-3xl font-bold  "> Take Control of Your Schedule </h1>
+          <h2 className="text-white text-xl xl:text-3xl lg:text-2xl md:text-2xl sm:text-xl xs:text-xl tiny:text-xl font-light ">Simplify Your Day with Our To-Do List App</h2>
         </div>
       </div>
       <div className=' h-max flex flex-col items-center my-3' >
