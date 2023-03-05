@@ -15,7 +15,7 @@ function App() {
 
   const updateToken = (newToken, uName,) => {
     localStorage.setItem("Authorization", newToken);
-    localStorage.setItem("username", uName);
+    localStorage.setItem("username", uName,);
     setSessionToken(newToken);
   }
 
