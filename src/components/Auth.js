@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Auth(props) {
+  // State variables for form inputs and validation errors
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +13,7 @@ export default function Auth(props) {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
+  // Validation functions for form inputs
   const validateUsername = (value) => {
     if (!value) {
       setUsernameError('Username is required');
@@ -21,7 +23,7 @@ export default function Auth(props) {
   };
 
   const validateEmail = (value) => {
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@\]+(\.[^<>()[\]\\.,;:\s@\]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!value) {
       setEmailError('Email is required');
     } else if (!emailRegex.test(value)) {
@@ -55,7 +57,7 @@ export default function Auth(props) {
   };
 
 
-
+  // Form submission functions
   const basicSignUp = async (e) => {
     e.preventDefault();
 
@@ -64,6 +66,7 @@ export default function Auth(props) {
     validatePassword(password);
     validateConfirmPassword(confirmPassword);
 
+    // If no validation errors, make POST request to register user
     if (!usernameError && !emailError && !passwordError && !confirmPasswordError) {
 
       await fetch("http://localhost:3000/register", {
@@ -95,14 +98,19 @@ export default function Auth(props) {
 
   }
 
+  // Define a function that will handle basic login.
+  // The function receives an event object as an argument.
   const basicLogin = async (e) => {
+    // Prevent the default form submission behavior.
     e.preventDefault();
 
+    // Validate the username, email, password, and confirmPassword fields.
     validateUsername(username);
     validateEmail(email);
     validatePassword(password);
     validateConfirmPassword(confirmPassword);
 
+    // If there are no validation errors, send a POST request to the '/login' endpoint.
     if (!usernameError && !emailError && !passwordError && !confirmPasswordError) {
 
       await fetch('http://localhost:3000/login', {
@@ -119,16 +127,19 @@ export default function Auth(props) {
       })
         .then(data => data.json())
         .then(data => {
+          // If the request is successful, update the token and the user's username.
           props.updateToken(data.sessionToken, data.user.username,)
         })
         .catch(err => console.log(err))
     }
   }
 
+  // Define a function that toggles between the login and sign up forms.
   const toggleForm = () => {
     setLoginActive(!loginActive)
   }
 
+  // Render the login/sign up page.
   return (
     <>
       <div className=" w-full bg-cover bg-center relative bg-gradient-to-tr from-blue-700 h-80">
