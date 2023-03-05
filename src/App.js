@@ -11,10 +11,9 @@ function App() {
   const navigate = useNavigate();
 
 
-  const updateToken = (newToken, uName, rName) => {
+  const updateToken = (newToken, uName,) => {
     localStorage.setItem("Authorization", newToken);
-    localStorage.setItem("firstname", uName);
-    localStorage.setItem("role", rName);
+    localStorage.setItem("username", uName);
     setSessionToken(newToken);
   }
 
