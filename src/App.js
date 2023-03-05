@@ -2,6 +2,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import Auth from './components/Auth';
+import TodayTask from './components/TodayTask';
+import Sidebar from './components/Sidebar';
 
 
 function App() {
@@ -27,10 +29,17 @@ function App() {
 
   return (
     <>
+      <Sidebar sessionToken={sessionToken} clearToken={clearToken} />
       <Routes>
         <Route path='/' element={
           <Auth sessionToken={sessionToken} userId={userId} setSessionToken={setSessionToken} updateToken={updateToken} setUserId={setUserId} />
-        }></Route>
+        } />
+
+        <Route path='/today' element={
+          <TodayTask />
+        } />
+
+
       </Routes>
     </>
   );

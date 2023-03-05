@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom';
+
 
 export default function Auth(props) {
   // State variables for form inputs and validation errors
@@ -87,6 +89,7 @@ export default function Auth(props) {
         .then(data => {
           console.log(data.username)
           if (data.user) {
+            console.log(data)
             props.setSessionToken(data.sessionToken);
             props.updateToken(data.sessionToken, data.user.id, data.user.username);
             props.setUserId(data.user.id);
@@ -127,8 +130,10 @@ export default function Auth(props) {
       })
         .then(data => data.json())
         .then(data => {
+          console.log(data)
           // If the request is successful, update the token and the user's username.
           props.updateToken(data.sessionToken, data.user.username,)
+          props.setUserId(data.user.id)
         })
         .catch(err => console.log(err))
     }
@@ -177,6 +182,7 @@ export default function Auth(props) {
                 <a onClick={toggleForm} className="text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">Sign up</a>
               </div>
               <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+              {props.userId !== "" && <Navigate to='/today' />}
             </form>
 
             : <form className="w-6/12" onSubmit={basicSignUp}>
@@ -209,6 +215,7 @@ export default function Auth(props) {
                 <a onClick={toggleForm} className="text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">Already Have an account ?</a>
               </div>
               <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+              {props.userId !== "" && <Navigate to='/today' />}
             </form>}
 
 
