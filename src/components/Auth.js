@@ -105,7 +105,7 @@ export default function Auth(props) {
   // The function receives an event object as an argument.
   const basicLogin = async (e) => {
     // Prevent the default form submission behavior.
-    e.preventDefault();
+    e.preventDefault()
 
     // Validate the username, email, password, and confirmPassword fields.
     validateUsername(username);
@@ -121,6 +121,7 @@ export default function Auth(props) {
         body: JSON.stringify({
           user: {
             email: email,
+            username: username,
             password: password
           }
         }),
@@ -159,7 +160,7 @@ export default function Auth(props) {
 
           loginActive ?
 
-            <form className="w-6/12" onSubmit={basicLogin()}>
+            <form className="w-6/12" onSubmit={basicLogin}>
               <h1 className=" tracking-wider text-blue-500 text-4xl font-bold mb-6">Login</h1>
               <div className="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
@@ -168,17 +169,17 @@ export default function Auth(props) {
                   {usernameError && <span className="text-red-500">{usernameError}</span>}
                 </div>
                 <div>
-                  <label for="email" className="block mb-2 text-sm font-medium text-blue-900 dark:text-white">Email</label>
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-blue-900 dark:text-white">Email</label>
                   <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => validateEmail(email)} className="bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Example@email.com" required />
                   {emailError && <span className="text-red-500">{emailError}</span>}
                 </div>
               </div>
-              <div class="mb-6">
+              <div className="mb-6">
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-blue-900 dark:text-white">Password</label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} onBlur={() => validatePassword(password)} type="password" id="password" className="bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
                 {passwordError && <span className="text-red-500">{passwordError}</span>}
               </div>
-              <div class="flex items-start mb-6">
+              <div className="flex items-start mb-6">
                 <a onClick={toggleForm} className="text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">Sign up</a>
               </div>
               <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>

@@ -26,6 +26,13 @@ function App() {
     navigate('/')
   }
 
+  useEffect(() => {
+    setUserId(userId)
+    if (localStorage.getItem('Authorization')) {
+      setSessionToken(localStorage.getItem('Authorization'))
+    }
+  }, [sessionToken])
+
 
   return (
     <>
