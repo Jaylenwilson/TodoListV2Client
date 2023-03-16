@@ -1,8 +1,5 @@
 import React from 'react'
 import { useState } from 'react';
-import Datepicker from "tailwind-datepicker-react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
-import { Label, Select } from 'flowbite-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -21,34 +18,9 @@ export default function TodayTask(props) {
     const [priority, setPriority] = useState(1);
     const [project, setProject] = useState('');
 
-
-    const options = {
-        title: "Due date",
-        autoHide: true,
-        todayBtn: true,
-        clearBtn: true,
-        maxDate: new Date("2030-01-01"),
-        minDate: new Date("2023-01-01"),
-        theme: {
-            background: "bg-slate-50",
-            todayBtn: "",
-            clearBtn: "",
-            icons: "",
-            text: "",
-            disabledText: "",
-            input: "bg-slate-50",
-            inputIcon: "",
-            selected: "bg-blue-500",
-        },
-        icons: {
-            // () => ReactElement | JSX.Element
-            prev: () => <span className="bg-none"><AiOutlineArrowLeft /></span>,
-            next: () => <span><AiOutlineArrowRight /></span>,
-        },
-        datepickerClassNames: "top-12",
-        defaultDate: new Date("2023-01-01"),
-        language: "en",
-    }
+    const date = new Date();
+    const options = { weekday: "long", month: "long", day: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
 
     const CreateTask = (e) => {
         e.preventDefault();
@@ -56,18 +28,17 @@ export default function TodayTask(props) {
     };
 
 
-    const handleChange = (selectedDate) => {
-        setSelectedDate(selectedDate)
-    }
-    const handleClose = () => {
-        setShow(!show)
-    }
+
     return (
         <>
             <div className="p-4 sm:ml-64">
+
                 <div className="p-4 border-2  border-dashed rounded-lg dark:border-gray-700 mt-14">
+                    <div className="border-solid border-b-2 border-black mb-2 p-1">
+                        <h1 className="text-lg font-bold">{formattedDate}</h1>
+                    </div>
                     <div>
-                        <button onClick={() => props.setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Task</button>
+                        <input onClick={() => props.setShowModal(true)} className=" border-blue-500 hover:bg-blue-500 text-blue-500 font-bold py-2 px-4 rounded w-full text-left placeholder-blue-500 hover:placeholder-white" placeholder="Create Task" />
                     </div>
                 </div>
                 {props.showModal && (
