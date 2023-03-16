@@ -10,6 +10,8 @@ function App() {
   const [sessionToken, setSessionToken] = useState("");
   const [userId, setUserId] = useState("");
   const [username, setUserName] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
 
@@ -36,14 +38,14 @@ function App() {
 
   return (
     <>
-      <Sidebar sessionToken={sessionToken} clearToken={clearToken} />
+      <Sidebar sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} />
       <Routes>
         <Route path='/' element={
           <Auth sessionToken={sessionToken} userId={userId} setSessionToken={setSessionToken} updateToken={updateToken} setUserId={setUserId} />
         } />
 
         <Route path='/today' element={
-          <TodayTask />
+          <TodayTask showModal={showModal} setShowModal={setShowModal} />
         } />
 
 
