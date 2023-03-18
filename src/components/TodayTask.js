@@ -17,15 +17,35 @@ export default function TodayTask(props) {
     const [dueDate, setDueDate] = useState(null);
     const [priority, setPriority] = useState(1);
     const [project, setProject] = useState('');
+    const [todoId, setTodoId] = useState('');
 
     const date = new Date();
     const options = { weekday: "long", month: "long", day: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
 
-    const CreateTask = (e) => {
+    const CreateTask = async (e) => {
         e.preventDefault();
         // handle form submission here
-    };
+        await fetch("http://localhost:3000/todo/createtodo", {
+            method: 'POST',
+            body: JSON.stringify({
+                todo: {
+                    title: title,
+                    description: description,
+                    priority: priority,
+                    dueDate: dueDate,
+                }
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                Authorization: `${localStorage.getItem("Authorization")}`
+            })
+        })
+            .then(data => data.json())
+            .then(data => {
+                setTodoId(data.id)
+            })
+    }
 
 
 
@@ -34,11 +54,11 @@ export default function TodayTask(props) {
             <div className="p-4 sm:ml-64">
 
                 <div className="p-4 border-2  border-dashed rounded-lg dark:border-gray-700 mt-14">
-                    <div className="border-solid border-b-2 border-black mb-2 p-1">
+                    <div className="border-solid border-b border-black mb-2 p-1">
                         <h1 className="text-lg font-bold">{formattedDate}</h1>
                     </div>
                     <div>
-                        <input onClick={() => props.setShowModal(true)} className=" border-blue-500 hover:bg-blue-500 text-blue-500 font-bold py-2 px-4 rounded w-full text-left placeholder-blue-500 hover:placeholder-white" placeholder="Create Task" />
+                        <input onClick={() => props.setShowModal(true)} className=" border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded w-full text-left placeholder-blue-500 hover:placeholder-white focus:disabled: active:disabled:" placeholder="Create Task" value="Create Task" />
                     </div>
                 </div>
                 {props.showModal && (
@@ -66,7 +86,7 @@ export default function TodayTask(props) {
                                         id="modal-headline"
                                     >
                                         Create New Task
-        </h3>
+                                    </h3>
                                     <div className="mt-3 sm:mt-4">
                                         <form onSubmit={CreateTask}>
                                             <div className="mb-4">
@@ -75,7 +95,7 @@ export default function TodayTask(props) {
                                                     className="block text-gray-700 font-bold mb-2"
                                                 >
                                                     Title*
-              </label>
+                                                </label>
                                                 <input
                                                     type="text"
                                                     id="title"
@@ -92,7 +112,7 @@ export default function TodayTask(props) {
                                                     className="block text-gray-700 font-bold mb-2"
                                                 >
                                                     Description
-              </label>
+                                                </label>
                                                 <textarea
                                                     id="description"
                                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -107,7 +127,7 @@ export default function TodayTask(props) {
                                                     className="block text-gray-700 font-bold mb-2"
                                                 >
                                                     Due Date
-              </label>
+                                                </label>
                                                 <DatePicker
                                                     id="dueDate" selected={dueDate}
                                                     onChange={(date) => setDueDate(date)}
@@ -122,7 +142,7 @@ export default function TodayTask(props) {
                                                     className="block text-gray-700 font-bold mb-2"
                                                 >
                                                     Priority
-              </label>
+                                                </label>
                                                 <select
                                                     id="priority"
                                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -142,7 +162,7 @@ export default function TodayTask(props) {
                                                     className="block text-gray-700 font-bold mb-2"
                                                 >
                                                     Project
-              </label>
+                                                </label>
                                                 <select
                                                     id="project"
                                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -161,13 +181,13 @@ export default function TodayTask(props) {
                                                     type="submit"
                                                 >
                                                     Create Task
-              </button>
+                                                </button>
                                                 <button
                                                     className="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                                     onClick={() => props.setShowModal(false)}
                                                 >
                                                     Cancel
-              </button>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
