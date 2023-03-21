@@ -82,6 +82,7 @@ function App() {
 
   useEffect(() => {
     setUserId(userId)
+    getProjects()
     if (localStorage.getItem('Authorization')) {
       setSessionToken(localStorage.getItem('Authorization'))
     }
