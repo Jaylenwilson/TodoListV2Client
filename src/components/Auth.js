@@ -135,6 +135,7 @@ export default function Auth(props) {
           // If the request is successful, update the token and the user's username.
           props.updateToken(data.sessionToken, data.user.username,)
           props.setUserId(data.user.id)
+          console.log(props.userId)
         })
         .catch(err => console.log(err))
     }

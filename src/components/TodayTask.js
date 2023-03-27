@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -43,8 +43,36 @@ export default function TodayTask(props) {
         })
             .then(data => data.json())
             .then(data => {
+                console.log(data)
                 setTodoId(data.id)
+                getTask()
             })
+
+            .catch((err) => console.log(err))
+    }
+    useEffect(() => {
+        getTask()
+    }, [])
+
+    const getTask = async (e) => {
+        await fetch(`http://localhost:3000/todo/all/${props.userId}`, {
+            method: 'GET',
+            headers: new Headers({
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("Authorization")}`
+            })
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data)
+                    props.setTasks(data.todos)
+                })
+        })
+            .catch((err) => console.log(err))
+    }
+
+
+    const displayTask = () => {
+        return
     }
 
 

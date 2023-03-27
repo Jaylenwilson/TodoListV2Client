@@ -14,7 +14,8 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState('');
-  const [projects, setProjects] = useState([])
+  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([])
 
 
   const navigate = useNavigate();
@@ -67,10 +68,14 @@ function App() {
       if (projects) {
         setProjects(projects)
       }
-    } catch {
-
+    } catch (err) {
+      console.log(err)
     }
   }
+
+  // useEffect(() => {
+  //   getProjects()
+  // })
 
   const projectDropDown = () => {
     return projects.map((project, index) => (
@@ -82,11 +87,14 @@ function App() {
 
   useEffect(() => {
     setUserId(userId)
-    getProjects()
     if (localStorage.getItem('Authorization')) {
       setSessionToken(localStorage.getItem('Authorization'))
     }
   }, [sessionToken])
+
+  // useEffect(() => {
+  //   getProjects()
+  // })
 
 
   return (
@@ -98,7 +106,7 @@ function App() {
         } />
 
         <Route path='/today' element={
-          <TodayTask showModal={showModal} setShowModal={setShowModal} />
+          <TodayTask showModal={showModal} setShowModal={setShowModal} tasks={tasks} setTasks={setTasks} />
         } />
 
 
