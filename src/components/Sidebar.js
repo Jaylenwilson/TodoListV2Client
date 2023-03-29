@@ -170,7 +170,7 @@ export default function Sidebar(props) {
                                                 id="title"
                                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 placeholder="Enter a project title"
-                                                value={props.setProjectName}
+                                                value={props.projectName}
                                                 onChange={(e) => props.setProjectName(e.target.value)}
                                                 required
                                             />

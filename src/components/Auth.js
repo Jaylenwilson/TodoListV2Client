@@ -87,13 +87,13 @@ export default function Auth(props) {
       })
         .then(data => data.json())
         .then(data => {
-          console.log(data.username)
+          console.log(data.user.username)
           if (data.user) {
             console.log(data)
             props.setSessionToken(data.sessionToken);
-            props.updateToken(data.sessionToken, data.user.id, data.user.username);
+            props.updateToken(data.sessionToken, data.user.username);
             props.setUserId(data.user.id);
-            setUsername(data.username)
+            setUsername(data.user.username)
           }
         })
         .catch(err => console.log(err))

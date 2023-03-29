@@ -34,8 +34,9 @@ function App() {
     navigate('/')
   }
 
-  const createProject = async () => {
-    await fetch("http://localhost:3000/project/createproject", {
+  const createProject = async (e) => {
+    e.preventDefault();
+    await fetch("http://localhost:3000/project/projectcreate", {
       method: 'POST',
       body: JSON.stringify({
         project: {
@@ -66,16 +67,17 @@ function App() {
       })
       const { projects } = await response.json()
       if (projects) {
-        setProjects(projects)
+        // setProjects(projects)
+        console.log(projects)
       }
     } catch (err) {
       console.log(err)
     }
   }
 
-  // useEffect(() => {
-  //   getProjects()
-  // })
+  useEffect(() => {
+    getProjects()
+  }, [])
 
   const projectDropDown = () => {
     return projects.map((project, index) => (
@@ -90,6 +92,7 @@ function App() {
     if (localStorage.getItem('Authorization')) {
       setSessionToken(localStorage.getItem('Authorization'))
     }
+    console.log(userId)
   }, [sessionToken])
 
   // useEffect(() => {
@@ -99,7 +102,7 @@ function App() {
 
   return (
     <>
-      <Sidebar projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} />
+      <Sidebar projectName={projectName} setProjectName={setProjectName} projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} />
       <Routes>
         <Route path='/' element={
           <Auth sessionToken={sessionToken} userId={userId} setSessionToken={setSessionToken} updateToken={updateToken} setUserId={setUserId} />

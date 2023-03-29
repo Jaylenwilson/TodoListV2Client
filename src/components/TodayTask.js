@@ -45,30 +45,30 @@ export default function TodayTask(props) {
             .then(data => {
                 console.log(data)
                 setTodoId(data.id)
-                getTask()
+                // getTask()
             })
 
             .catch((err) => console.log(err))
     }
-    useEffect(() => {
-        getTask()
-    }, [])
+    // useEffect(() => {
+    //     getTask()
+    // }, [])
 
-    const getTask = async (e) => {
-        await fetch(`http://localhost:3000/todo/all/${props.userId}`, {
-            method: 'GET',
-            headers: new Headers({
-                "Content-Type": "application/json",
-                Authorization: `${localStorage.getItem("Authorization")}`
-            })
-                .then(data => data.json())
-                .then(data => {
-                    console.log(data)
-                    props.setTasks(data.todos)
-                })
-        })
-            .catch((err) => console.log(err))
-    }
+    // const getTask = async (e) => {
+    //     await fetch(`http://localhost:3000/todo/all/${props.userId}`, {
+    //         method: 'GET',
+    //         headers: new Headers({
+    //             "Content-Type": "application/json",
+    //             Authorization: `${localStorage.getItem("Authorization")}`
+    //         })
+    //             .then(data => data.json())
+    //             .then(data => {
+    //                 console.log(data)
+    //                 props.setTasks(data.todos)
+    //             })
+    //     })
+    //         .catch((err) => console.log(err))
+    // }
 
 
     const displayTask = () => {
