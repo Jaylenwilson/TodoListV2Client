@@ -56,20 +56,20 @@ function App() {
   }
 
 
-  const getProjects = async () => {
+  const getProjects = async (e) => {
     try {
-      const response = await fetch(`http://localhost:3000/project/allprojects/${userId}`, {
+      await fetch(`http://localhost:3000/project/allprojects/${userId}`, {
         method: 'GET',
         headers: new Headers({
           'Content-Type': 'application/json',
           Authorization: `${localStorage.getItem('Authorization')}`,
         }),
       })
-      const { projects } = await response.json()
-      if (projects) {
-        // setProjects(projects)
-        console.log(projects)
-      }
+        .then(data => data.json())
+        .then(data => {
+          console.log(data)
+          // setProjects(data.projects)
+        })
     } catch (err) {
       console.log(err)
     }
@@ -77,7 +77,7 @@ function App() {
 
   useEffect(() => {
     getProjects()
-  }, [])
+  }, [userId])
 
   const projectDropDown = () => {
     return projects.map((project, index) => (
