@@ -15,15 +15,17 @@ function App() {
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState('');
   const [projects, setProjects] = useState([]);
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
+  const [refreshProjects, setRefreshProjects] = useState(false);
 
 
   const navigate = useNavigate();
 
 
-  const updateToken = (newToken, uName,) => {
+  const updateToken = (newToken, uName, uId) => {
     localStorage.setItem("Authorization", newToken);
-    localStorage.setItem("username", uName,);
+    localStorage.setItem("username", uName);
+    localStorage.setItem("userId", uId);
     setSessionToken(newToken);
   }
 
@@ -52,32 +54,42 @@ function App() {
       .then(data => {
         console.log(data)
         setProjectId(data.id)
+        setRefreshProjects(prevState => !prevState);
       })
+      .catch(err => console.log(err))
+
   }
 
 
-  const getProjects = async (e) => {
-    try {
-      await fetch(`http://localhost:3000/project/allprojects/${userId}`, {
-        method: 'GET',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          Authorization: `${localStorage.getItem('Authorization')}`,
-        }),
+  const getProjects = async () => {
+    await fetch(`http://localhost:3000/project/allprojects/${userId}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: `${localStorage.getItem('Authorization')}`,
+      }),
+    })
+      .then(data => data.json())
+      .then(data => {
+        console.log(data)
+        console.log(data.projects)
+        setProjects(data.projects)
+        console.log(projects)
       })
-        .then(data => data.json())
-        .then(data => {
-          console.log(data)
-          // setProjects(data.projects)
-        })
-    } catch (err) {
-      console.log(err)
-    }
+      .catch(err => console.log(err))
+
   }
 
   useEffect(() => {
-    getProjects()
-  }, [userId])
+    if (userId) {
+      getProjects();
+    }
+  }, [userId, refreshProjects]);
+
+  useEffect(() => {
+    console.log('Projects updated:', projects);
+  }, [projects]);
+
 
   const projectDropDown = () => {
     return projects.map((project, index) => (
@@ -88,9 +100,9 @@ function App() {
   }
 
   useEffect(() => {
-    setUserId(userId)
     if (localStorage.getItem('Authorization')) {
-      setSessionToken(localStorage.getItem('Authorization'))
+      setSessionToken(localStorage.getItem('Authorization'));
+      setUserId(localStorage.getItem('userId'));
     }
     console.log(userId)
   }, [sessionToken])
@@ -102,7 +114,7 @@ function App() {
 
   return (
     <>
-      <Sidebar projectName={projectName} setProjectName={setProjectName} projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} />
+      <Sidebar projectName={projectName} setProjectName={setProjectName} projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} userId={userId} />
       <Routes>
         <Route path='/' element={
           <Auth sessionToken={sessionToken} userId={userId} setSessionToken={setSessionToken} updateToken={updateToken} setUserId={setUserId} />

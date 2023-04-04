@@ -91,7 +91,7 @@ export default function Auth(props) {
           if (data.user) {
             console.log(data)
             props.setSessionToken(data.sessionToken);
-            props.updateToken(data.sessionToken, data.user.username);
+            props.updateToken(data.sessionToken, data.user.username, data.user.id);
             props.setUserId(data.user.id);
             setUsername(data.user.username)
           }
@@ -131,11 +131,14 @@ export default function Auth(props) {
       })
         .then(data => data.json())
         .then(data => {
+          if (data.user) {
+
+            props.updateToken(data.sessionToken, data.user.username, data.user.id)
+            props.setUserId(data.user.id)
+            console.log(props.userId)
+          }
           console.log(data)
           // If the request is successful, update the token and the user's username.
-          props.updateToken(data.sessionToken, data.user.username,)
-          props.setUserId(data.user.id)
-          console.log(props.userId)
         })
         .catch(err => console.log(err))
     }

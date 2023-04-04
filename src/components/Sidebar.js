@@ -21,8 +21,8 @@ export default function Sidebar(props) {
 
     return (
 
-        <div>
-            {props.sessionToken ?
+        <>
+            {props.userId && (
                 <nav>
                     <nav className="fixed top-0 z-50 w-full border-b text-white bg-blue-500 border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -74,7 +74,7 @@ export default function Sidebar(props) {
                         </div>
                     </nav>
                 </nav>
-                : null}
+            )}
             {props.sessionToken ?
 
 
@@ -104,9 +104,11 @@ export default function Sidebar(props) {
                                 </button>
                                 {dropdownActive ?
                                     <ul id="dropdown-example" className="py-2 space-y-2">
-                                        {props.projectDropdown}
+                                        <li>
+                                            <a href="#" className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{props.projectDropdown}</a>
+                                        </li>
+
                                         {/* <li>
-                                            <a href="#" className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
                                         </li>
                                         <li>
                                             <a href="#" className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
@@ -197,6 +199,6 @@ export default function Sidebar(props) {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     )
 }
