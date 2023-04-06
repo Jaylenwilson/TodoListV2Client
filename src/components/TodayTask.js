@@ -18,6 +18,7 @@ export default function TodayTask(props) {
     const [priority, setPriority] = useState(1);
     const [project, setProject] = useState('');
     const [todoId, setTodoId] = useState('');
+    const [refreshTask, setRefreshTask] = useState(false)
 
     const date = new Date();
     const options = { weekday: "long", month: "long", day: "numeric" };
@@ -45,36 +46,48 @@ export default function TodayTask(props) {
             .then(data => {
                 console.log(data)
                 setTodoId(data.id)
-                // getTask()
+                setRefreshTask(prevState => !prevState)
             })
 
             .catch((err) => console.log(err))
     }
 
 
-    // useEffect(() => {
-    //     getTask()
-    // }, [])
+    useEffect(() => {
+        if (props.userId) {
+            getTask()
+        }
+    }, [refreshTask, props.userId])
 
-    // const getTask = async (e) => {
-    //     await fetch(`http://localhost:3000/todo/all/${props.userId}`, {
-    //         method: 'GET',
-    //         headers: new Headers({
-    //             "Content-Type": "application/json",
-    //             Authorization: `${localStorage.getItem("Authorization")}`
-    //         })
-    //             .then(data => data.json())
-    //             .then(data => {
-    //                 console.log(data)
-    //                 props.setTasks(data.todos)
-    //             })
-    //     })
-    //         .catch((err) => console.log(err))
-    // }
+    const getTask = async (e) => {
+        await fetch(`http://localhost:3000/todo/all/${props.userId}`, {
+            method: 'GET',
+            headers: new Headers({
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("Authorization")}`
+            }),
+        })
+            .then(data => data.json())
+            .then(data => {
+                console.log(data)
+                props.setTasks(data.todos)
+                console.log(props.userId)
+            })
+            .catch((err) => console.log(err))
+
+    }
 
 
     const displayTask = () => {
-        return
+        return props.tasks.map((task, index) => (
+            <li
+                key={task.id}
+                className="bg-white border border-gray-200 p-4 rounded-md shadow-sm"
+            >
+                <h2 className="text-xl font-semibold mb-2">{task.title}</h2>
+                <p className="text-gray-600">{task.description}</p>
+            </li>
+        ))
     }
 
 
@@ -220,6 +233,11 @@ export default function TodayTask(props) {
                                                 </button>
                                             </div>
                                         </form>
+                                    </div>
+                                    <div className="container mx-auto p-6">
+                                        <ul className="space-y-4">
+                                            {displayTask()}
+                                        </ul>
                                     </div>
                                 </div>
                             </div>

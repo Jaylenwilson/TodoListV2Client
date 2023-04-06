@@ -121,7 +121,7 @@ function App() {
         } />
 
         <Route path='/today' element={
-          <TodayTask showModal={showModal} setShowModal={setShowModal} tasks={tasks} setTasks={setTasks} />
+          <TodayTask showModal={showModal} setShowModal={setShowModal} tasks={tasks} setTasks={setTasks} userId={userId} />
         } />
 
 
