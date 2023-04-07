@@ -82,13 +82,37 @@ export default function TodayTask(props) {
         return props.tasks.map((task, index) => (
             <li
                 key={task.id}
-                className="bg-white border border-gray-200 p-4 rounded-md shadow-sm"
+                className="bg-white border border-gray-200 p-4 rounded-md shadow-sm flex flex-wrap items-start"
             >
-                <h2 className="text-xl font-semibold mb-2">{task.title}</h2>
-                <p className="text-gray-600">{task.description}</p>
+                <input
+                    type="radio"
+                    name="task"
+                    id={task.id}
+                    className="mr-4 mt-1"
+                    onClick={() => {
+                        // Handle delete logic here
+                    }}
+                />
+                <div className="w-full">
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-xl font-semibold mb-2">{task.title}</h2>
+                        <div>
+                            <span className="font-semibold">Priority: </span>
+                            {task.priority}
+                        </div>
+                    </div>
+                    <p className="text-gray-600 mb-2">{task.description}</p>
+                    <div>
+                        <span className="font-semibold">Due Date: </span>
+                        {task.dueDate
+                            ? new Date(task.dueDate).toLocaleDateString()
+                            : 'Not set'}
+                    </div>
+                </div>
             </li>
-        ))
-    }
+        ));
+    };
+
 
 
 
@@ -102,6 +126,11 @@ export default function TodayTask(props) {
                     </div>
                     <div>
                         <input onClick={() => props.setShowModal(true)} className=" border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white font-bold py-2 px-4 rounded w-full text-left placeholder-blue-500 hover:placeholder-white focus:disabled: active:disabled:" placeholder="Create Task" value="Create Task" />
+                    </div>
+                    <div className="container mx-auto p-6">
+                        <ul className="space-y-4">
+                            {displayTask()}
+                        </ul>
                     </div>
                 </div>
                 {props.showModal && (
@@ -130,6 +159,7 @@ export default function TodayTask(props) {
                                     >
                                         Create New Task
                                     </h3>
+
                                     <div className="mt-3 sm:mt-4">
                                         <form onSubmit={CreateTask}>
                                             <div className="mb-4">
@@ -234,13 +264,9 @@ export default function TodayTask(props) {
                                             </div>
                                         </form>
                                     </div>
-                                    <div className="container mx-auto p-6">
-                                        <ul className="space-y-4">
-                                            {displayTask()}
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 )}
