@@ -82,7 +82,7 @@ export default function TodayTask(props) {
         return props.tasks.map((task, index) => (
             <li
                 key={task.id}
-                className="bg-white border border-gray-200 p-4 rounded-md shadow-sm flex flex-wrap items-start"
+                className="bg-white border border-gray-200 p-4 rounded-md shadow-sm flex items-start"
             >
                 <input
                     type="radio"
@@ -93,25 +93,28 @@ export default function TodayTask(props) {
                         // Handle delete logic here
                     }}
                 />
-                <div className="w-full">
-                    <div className="flex justify-between items-center">
+                <div className="flex flex-col">
+                    <div className="flex justify-between items-center w-full">
                         <h2 className="text-xl font-semibold mb-2">{task.title}</h2>
+                    </div>
+                    <p className="text-gray-600 mb-2">{task.description}</p>
+                    <div className="flex justify-between w-full">
                         <div>
                             <span className="font-semibold">Priority: </span>
                             {task.priority}
                         </div>
-                    </div>
-                    <p className="text-gray-600 mb-2">{task.description}</p>
-                    <div>
-                        <span className="font-semibold">Due Date: </span>
-                        {task.dueDate
-                            ? new Date(task.dueDate).toLocaleDateString()
-                            : 'Not set'}
+                        <div>
+                            <span className="font-semibold">Due Date: </span>
+                            {task.dueDate
+                                ? new Date(task.dueDate).toLocaleDateString()
+                                : 'Not set'}
+                        </div>
                     </div>
                 </div>
             </li>
         ));
     };
+
 
 
 
