@@ -92,11 +92,16 @@ function App() {
 
 
   const projectDropDown = () => {
-    return projects.map((project, index) => (
-      <li key={project.id}>
-        <a className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" href="">{project.projectName}</a>
-      </li>
-    ))
+    if (projects.length == 0) {
+      return <p className="flex items-center w-full p-2 text-base font-normal text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">You have no projects</p>
+    } else {
+      return projects.map((project, index) => (
+
+        <li key={project.id}>
+          <a className="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" href="">{project.projectName}</a>
+        </li>
+      ))
+    }
   }
 
   useEffect(() => {
@@ -114,7 +119,7 @@ function App() {
 
   return (
     <>
-      <Sidebar projectName={projectName} setProjectName={setProjectName} projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} userId={userId} tasks={tasks} />
+      <Sidebar projectName={projectName} setProjectName={setProjectName} projectDropDown={projectDropDown} createProject={createProject} getProjects={getProjects} sessionToken={sessionToken} clearToken={clearToken} showModal={showModal} setShowModal={setShowModal} createProject={createProject} userId={userId} tasks={tasks} projects={projects} />
       <Routes>
         <Route path='/' element={
           <Auth sessionToken={sessionToken} userId={userId} setSessionToken={setSessionToken} updateToken={updateToken} setUserId={setUserId} />
